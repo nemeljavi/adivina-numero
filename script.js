@@ -1,8 +1,11 @@
 // configurar la aplicación
 const mensajeInicial = 'Empieza a adivinar...'
-let score = 20
+const SCORE = 20
+
+// variables de la aplicación
+let score
 let highScore = 0
-const secretNumber = Math.trunc(Math.random() * 20) + 1
+let secretNumber
 
 // seleccionar elementos del DOM
 const messageField = document.querySelector('.message')
@@ -14,15 +17,13 @@ const againButton = document.querySelector('.again')
 const guessNumberField = document.querySelector('.guess')
 
 // inicializar la aplicación
-messageField.textContent = mensajeInicial
-scoreField.textContent = score
-highScoreField.textContent = highScore
-
+initApp()
 
 // funcionalidad de la aplicación
 
 // addEventListener es una función que recibe
 // como argumento otra función
+
 checkButton.addEventListener('click', () => {
   // obtener el valor del input
   const guessNumber = Number(guessNumberField.value)
@@ -39,18 +40,15 @@ checkButton.addEventListener('click', () => {
     scoreField.textContent = score
     messageField.textContent = 'Te has quedado corto'
   } else {
-
-
-    // ha ganado...
-
-    
     // cambiar fondo de pantalla
     document.body.style.backgroundColor = 'green'
     checkButton.disabled = true
-    // mostrar el numero secreto
+    // mostrar el mensaje
+    messageField.textContent = '¡Has acertado!'
+    // mostrar el número secreto
     secretNumberField.textContent = secretNumber
-    messageField.textContent = 'Has acertado'
-
+    secretNumberField.style.backgroundColor = 'yellow'
+    secretNumberField.style.width = '300px'
 
     // actualizar el highScore
     if (score > highScore) {
@@ -58,6 +56,32 @@ checkButton.addEventListener('click', () => {
       highScoreField.textContent = highScore
     }
   }
-
-  // compararlo con el secretNumber
 })
+
+function initApp() {
+  // inicializamos score
+
+  score = SCORE
+  scoreField.textContent = score
+
+  // TODO: inicializar highScore
+  // habría que leer de algún almacenamiento: cookies, sessionStorage, localStorage
+
+  // highScoreField.textContent = highScore
+
+  // inicializar el texto de inicio
+  messageField.textContent = mensajeInicial
+
+  // inicializar el número secreto
+  secretNumber = Math.trunc(Math.random() * 20) + 1
+  secretNumberField.textContent = '?'
+
+  // inicializar el aspecto visual de los elementos
+  document.body.style.backgroundColor = '#222'
+  secretNumberField.style.backgroundColor = '#fff'
+  secretNumberField.style.width = '150px'
+
+  checkButton.disabled = false
+}
+
+againButton.addEventListener('click', initApp)
