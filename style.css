@@ -57,8 +57,8 @@ h1 {
 }
 
 .number {
-  background: #eee;
-  color: #333;
+  background: rgb(148, 202, 224);
+  color: hsl(288, 98%, 48%);
   font-size: 6rem;
   width: 15rem;
   padding: 3rem 0rem;
@@ -97,7 +97,7 @@ h1 {
 
 .btn {
   border: none;
-  background-color: #eee;
+  background-color: hsl(64, 100%, 51%);
   color: #222;
   font-size: 2rem;
   font-family: inherit;
