@@ -1,12 +1,12 @@
 // configurar la aplicación
 const mensajeInicial = 'Empieza a adivinar...'
-const SCORE = 20
+const INIT_SCORE = 20
+const INIT_HIGH_SCORE = 0
 
 // variables de la aplicación
 let score
-let highScore = 0
 let secretNumber
-
+let highScore
 // seleccionar elementos del DOM
 const messageField = document.querySelector('.message')
 const scoreField = document.querySelector('.score')
@@ -19,10 +19,14 @@ const guessNumberField = document.querySelector('.guess')
 // inicializar la aplicación
 initApp()
 
-// funcionalidad de la aplicación
+// intentar recuperar highScore de localStorage
+const storedHighScore = localStorage.getItem('highScore')
+if (storedHighScore) {
+  highScore = parseInt(storedHighScore)
+  highScoreField.textContent = highScore
+}
 
-// addEventListener es una función que recibe
-// como argumento otra función
+// funcionalidad de la aplicación
 
 checkButton.addEventListener('click', () => {
   // obtener el valor del input
@@ -50,24 +54,28 @@ checkButton.addEventListener('click', () => {
     secretNumberField.style.backgroundColor = 'yellow'
     secretNumberField.style.width = '300px'
 
-    // actualizar el highScore
+    // actualizar el highScore y almacenarlo en localStorage
     if (score > highScore) {
       highScore = score
       highScoreField.textContent = highScore
+      localStorage.setItem('highScore', highScore.toString())
     }
   }
 })
 
 function initApp() {
   // inicializamos score
-
-  score = SCORE
+  score = INIT_SCORE
   scoreField.textContent = score
 
-  // TODO: inicializar highScore
-  // habría que leer de algún almacenamiento: cookies, sessionStorage, localStorage
+  // leer el highscore del localStorage y si no está inicializarlo con INIT_HIGH_SCORE
+  highScore = INIT_HIGH_SCORE
+  const storedHighScore = localStorage.getItem('highScore')
 
-  // highScoreField.textContent = highScore
+  if (storedHighScore) {
+    highScore = parseInt(storedHighScore)
+    highScoreField.textContent = highScore
+  }
 
   // inicializar el texto de inicio
   messageField.textContent = mensajeInicial
